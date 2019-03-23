@@ -3,6 +3,14 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+//配置Vant的JS
+import Vant from 'vant'
+//配置Vant的JS
+import 'vant/lib/index.css';
+
+//注册Vant全局组建及挂在
+Vue.use(Vant)
+
 
 Vue.config.productionTip = false
 
