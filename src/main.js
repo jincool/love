@@ -9,7 +9,7 @@ import Vant from 'vant'
 import 'vant/lib/index.css';
 
 //注册Vant全局组建及挂在
-Vue.use(Vant)
+Vue.use(Vant);
 
 
 Vue.config.productionTip = false
