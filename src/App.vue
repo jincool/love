@@ -1,23 +1,50 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <router-view/>
+    <van-tabbar v-model="active">
+      <van-tabbar-item @click="changeHash" icon="home-o" >我们</van-tabbar-item>
+      <van-tabbar-item @click="changeHash" icon="friends-o" dot>计划</van-tabbar-item>
+      <van-tabbar-item @click="changeHash" icon="shopping-cart-o" info="5">动态</van-tabbar-item>
+      <van-tabbar-item @click="changeHash" icon="search" info="20">设置</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+    export default {
+        name: "App",
+        data (){
+
+            return{
+                msg:'欢迎来到vue!',
+                cool:'cool',
+                active:0
+            }
+        },
+        methods:{
+            changeHash:function () {
+                this.$nextTick(function () {
+                    var routerName={'0':'Home','1':'Plan','2':'Dynamic','3':'Setting'}[this.active];
+                    this.$router.push({
+                        name:routerName
+                    })
+                    console.log(routerName)
+                })
+
+            }
+        },
+        watch:{
+            // selected(newv){
+            //     this.$router.push({
+            //         name:newv
+            //     })
+            // }
+        }
+    }
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
 }
 </style>
