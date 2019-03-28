@@ -4,7 +4,7 @@
         <van-row>
             <van-col span="24">
                 <van-nav-bar
-                        title="APP名字"
+                        title="酷OS"
                         fixed
                         @click-right="addInfo"
                 >
@@ -16,11 +16,11 @@
                 </div>
                 <a href="#" class="thumbnail">
                     <img @click="updateImg" class="" src="../../assets/img/bg_home1.jpeg"
-                         alt="通用的占位符缩略图" style="height:250px">
+                         alt="图" style="height:250px">
                 </a>
 
             </van-col>
-            <!--纪念日列表-->
+            <!--纪念日列表 -->
             <van-col span="24">
                 <van-cell title="相恋日" value-class="love_data_color" value="335天" label="2018-03-03"/>
                 <van-cell title="相识日" value-class="love_data_color" value="3135天" label="2008-03-03"/>
@@ -91,10 +91,11 @@
                 />
             </van-cell-group>
             <!--选择纪念日日期  -->
-            <van-cell-group >
-                <van-cell @click.native="selectDateShow" icon="underway-o"  title="日期" value-class="love_data_color" is-link  value="" >
+            <van-cell-group>
+                <van-cell @click.native="selectDateShow" icon="underway-o" title="日期" value-class="love_data_color"
+                          is-link value="">
                     <template slot="">
-                      {{date}}
+                        {{date}}
                     </template>
                 </van-cell>
             </van-cell-group>
@@ -128,9 +129,9 @@
                 croppa: {},  //裁剪的数据
                 dataUrl: '',
                 lvoe_date: '345', //恋爱天数
-                message:'',
+                message: '',
                 currentDate: new Date(),//日期选择,
-                date:''
+                date: ''
             }
         },
         methods: {
@@ -143,45 +144,45 @@
                 this.show = !this.show;
             },
             //日期选择模态框开启
-            selectDateShow(){
+            selectDateShow() {
                 this.dateShow = !this.dateShow
             },
             save() {
                 this.$toast('保存')
                 this.show = false;
             },
-            selectDate(){
-                    var date = new Date();
-                    var seperator1 = "-";
-                    var year = date.getFullYear();
-                    var month = date.getMonth() + 1;
-                    var strDate = date.getDate();
-                    if (month >= 1 && month <= 9) {
-                        month = "0" + month;
-                    }
-                    if (strDate >= 0 && strDate <= 9) {
-                        strDate = "0" + strDate;
-                    }
-                    var currentdate = year + seperator1 + month + seperator1 + strDate;
-                    return this.date=currentdate;
+            selectDate() {
+                let date = new Date();
+                let seperator1 = "-";
+                let year = date.getFullYear();
+                let month = date.getMonth() + 1;
+                let strDate = date.getDate();
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                let currentdate = year + seperator1 + month + seperator1 + strDate;
+                return this.date = currentdate;
             },
             // 日期选择确认按钮，关闭当前模态框
-            confirm(){
+            confirm() {
                 this.selectDateShow()
             },
             // 日期选择更改
-            change(e){
-                let dateArr=e.getValues()
-                this.date=dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2]
+            change(e) {
+                let dateArr = e.getValues()
+                this.date = dateArr[0] + '-' + dateArr[1] + '-' + dateArr[2]
             },
             // 日期选择取消按钮，关闭当前模态框
-            cancel(){
+            cancel() {
                 this.selectDateShow()
             }
 
 
         },
-        created () {
+        created() {
             this.selectDate()//加载当前日期
             // this.$axios.post('')
             //     .then(res=>{
