@@ -11,6 +11,9 @@ import Vant from 'vant'
 import 'vant/lib/index.css';
 //配置图片裁剪
 import Croppa from 'vue-croppa'
+//配置日期格式JS
+import moment from 'moment'
+import 'moment/locale/zh-cn'
 //配置图裁剪CSS
 import 'vue-croppa/dist/vue-croppa.css'
 
@@ -18,12 +21,16 @@ import 'vue-croppa/dist/vue-croppa.css'
 //配置公共请求地址
 Axios.defaults.baseURL='http://127.0.0.1/volservice/?a=getApi';
 Vue.prototype.$axios=Axios ;
+Vue.prototype.$moment=moment ;
 
 //注册Vant全局组建及挂在
 Vue.use(Vant);
 //注册Croppa全局组建及挂在
 Vue.use(Croppa);
-
+Vue.filter('agoDate',function (datetime) {
+    moment.locale('zh-cn');
+    return moment().diff(moment(datetime),'day')+'天';
+})
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

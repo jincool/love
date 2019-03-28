@@ -4,7 +4,7 @@
         <van-row>
             <van-col span="24">
                 <van-nav-bar
-                        title="酷OS"
+                        title="Cool"
                         fixed
                         @click-right="addInfo"
                 >
@@ -22,11 +22,18 @@
             </van-col>
             <!--纪念日列表 -->
             <van-col span="24">
-                <van-cell title="相恋日" value-class="love_data_color" value="335天" label="2018-03-03"/>
-                <van-cell title="相识日" value-class="love_data_color" value="3135天" label="2008-03-03"/>
-                <van-cell title="第一次约会" value-class="love_data_color" value="32天" label="20019-03-03"/>
-                <van-cell title="第一次旅游" value-class="love_data_color" value="32天" label="20019-04-04"/>
-
+                <van-cell v-for="record in records" title="" value-class="love_data_color" value="" label="2018-03-03"
+                          :key="record.id">
+                    <template slot="title">
+                        {{record.title}}
+                    </template>
+                    <template slot="">
+                        {{record.datetime | agoDate }}
+                    </template>
+                    <template slot="label">
+                        {{record.datetime}}
+                    </template>
+                </van-cell>
             </van-col>
 
         </van-row>
@@ -123,6 +130,10 @@
         name: "Home",
         data() {
             return {
+                records: [{'id': 1, 'title': '相恋日', 'datetime': '2019-03-03'},
+                    {'id': 2, 'title': '相识日', 'datetime': '2009-09-01'},
+                    {'id': 3, 'title': '第一次约会', 'datetime': '2019-02-13'},
+                    {'id': 4, 'title': '第一次旅游', 'datetime': '2019-04-03'}],
                 bgShow: false, //背景模态框
                 show: false, //纪念日模态框
                 dateShow: false, //纪念日模态框
@@ -152,19 +163,7 @@
                 this.show = false;
             },
             selectDate() {
-                let date = new Date();
-                let seperator1 = "-";
-                let year = date.getFullYear();
-                let month = date.getMonth() + 1;
-                let strDate = date.getDate();
-                if (month >= 1 && month <= 9) {
-                    month = "0" + month;
-                }
-                if (strDate >= 0 && strDate <= 9) {
-                    strDate = "0" + strDate;
-                }
-                let currentdate = year + seperator1 + month + seperator1 + strDate;
-                return this.date = currentdate;
+                 return this.date = this.$moment().format('YYYY-MM-DD');
             },
             // 日期选择确认按钮，关闭当前模态框
             confirm() {
