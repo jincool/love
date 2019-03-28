@@ -44,6 +44,7 @@
                                 :placeholder-font-size="16"
                                 :accept="'image/*'"
                                 prevent-white-space
+                                crossOrigin="anonymous"
                                 :initial-image=dataUrl
                                 @init=""
                         ></croppa>
@@ -53,7 +54,7 @@
                     <div slot="footer">
                         <van-row>
                             <van-col span="4">
-                                <van-button @click="cancelUpdateImg" size="small" type="danger">取消</van-button>
+                                <van-button @click="updateImg" size="small" type="danger">取消</van-button>
                             </van-col>
                             <van-col span="4" offset="16">
                                 <van-button size="small">确定</van-button>
@@ -68,9 +69,48 @@
             </div>
         </van-popup>
 
-       <!--添加纪念日模态框板块-->
+        <!--添加纪念日模态框板块-->
         <van-popup v-model="show" overlay-class="cool" position="right" :overlay="true">
-            
+            <van-nav-bar
+                    title="添加纪念日"
+                    left-text="返回"
+                    right-text="保存"
+                    left-arrow
+                    @click-left="addInfo"
+                    @click-right="save"
+            />
+            <!--纪念日内容板块-->
+            <van-cell-group>
+                <van-field
+                        v-model="message"
+                        type="textarea"
+                        placeholder="这是我和你的什么纪念日呢？"
+                        rows="5"
+                        autosize
+                        clearable
+                />
+            </van-cell-group>
+            <!--选择纪念日日期  -->
+            <van-cell-group >
+                <van-cell @click.native="selectDateShow" icon="underway-o"  title="日期" value-class="love_data_color" is-link  value="" >
+                    <template slot="">
+                      {{date}}
+                    </template>
+                </van-cell>
+            </van-cell-group>
+
+            <!--添加纪念日模态框板块end-->
+        </van-popup>
+
+        <!--日期选择模态框-->
+        <van-popup v-model="dateShow" position="bottom" :overlay="false">
+            <van-datetime-picker
+                    v-model="currentDate"
+                    type="date"
+                    @confirm="confirm"
+                    @change="change"
+                    @cancel="cancel"
+            />
         </van-popup>
 
     </div>
@@ -84,34 +124,73 @@
             return {
                 bgShow: false, //背景模态框
                 show: false, //纪念日模态框
+                dateShow: false, //纪念日模态框
                 croppa: {},  //裁剪的数据
                 dataUrl: '',
-                lvoe_date: '345' //恋爱天数
+                lvoe_date: '345', //恋爱天数
+                message:'',
+                currentDate: new Date(),//日期选择,
+                date:''
             }
         },
         methods: {
-            //显示更新照片模态框
+            //显示/关闭更新照片模态框
             updateImg() {
-                this.bgShow = true;
+                this.bgShow = !this.bgShow;
             },
-            cancelUpdateImg() {
-                this.bgShow = false
-            },
+            // 纪念日模态框开启/关闭
             addInfo() {
-                // 纪念日模态框开启
-                this.show =true;
+                this.show = !this.show;
+            },
+            //日期选择模态框开启
+            selectDateShow(){
+                this.dateShow = !this.dateShow
+            },
+            save() {
+                this.$toast('保存')
+                this.show = false;
+            },
+            selectDate(){
+                    var date = new Date();
+                    var seperator1 = "-";
+                    var year = date.getFullYear();
+                    var month = date.getMonth() + 1;
+                    var strDate = date.getDate();
+                    if (month >= 1 && month <= 9) {
+                        month = "0" + month;
+                    }
+                    if (strDate >= 0 && strDate <= 9) {
+                        strDate = "0" + strDate;
+                    }
+                    var currentdate = year + seperator1 + month + seperator1 + strDate;
+                    return this.date=currentdate;
+            },
+            // 日期选择确认按钮，关闭当前模态框
+            confirm(){
+                this.selectDateShow()
+            },
+            // 日期选择更改
+            change(e){
+                let dateArr=e.getValues()
+                this.date=dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2]
+            },
+            // 日期选择取消按钮，关闭当前模态框
+            cancel(){
+                this.selectDateShow()
             }
 
+
+        },
+        created () {
+            this.selectDate()//加载当前日期
+            // this.$axios.post('')
+            //     .then(res=>{
+            //
+            //     })
+            //     .catch(err=>{
+            //
+            //     })
         }
-        // created () {
-        //     this.$axios.post('')
-        //         .then(res=>{
-        //
-        //         })
-        //         .catch(err=>{
-        //
-        //         })
-        // }
 
 
     }
@@ -164,7 +243,13 @@
         position: absolute;
         z-index: 10;
     }
-    .cool{
+
+    .cool {
         background-color: aqua;
+    }
+
+    .van-popup--right {
+        height: 100%;
+        width: 100%;
     }
 </style>
