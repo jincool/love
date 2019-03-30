@@ -1,5 +1,5 @@
 <template>
-   <div>我是动态</div>
+   <div>我是动态1</div>
 </template>
 
 <script>
