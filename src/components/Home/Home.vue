@@ -70,7 +70,7 @@
 
        <!--添加纪念日模态框板块-->
         <van-popup v-model="show" overlay-class="cool" position="right" :overlay="true">
-            
+            <van-button @click="takephoto" size="small">拍照</van-button>
         </van-popup>
 
     </div>
