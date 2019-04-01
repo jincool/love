@@ -1,15 +1,14 @@
 <template>
     <div>
-
         <van-row>
             <van-col span="24">
-                <van-nav-bar
-                        title="Cool"
-                        fixed
-                        @click-right="addInfo"
-                >
-                    <van-icon name="weapp-nav" color="#ffffff" slot="right"/>
-                </van-nav-bar>
+                <my-header>
+                    <div slot="title">{{title}}</div>
+                    <div slot="right">
+                        <van-icon name="weapp-nav" color="#ffffff" @click="addInfo" />
+                    </div>
+                </my-header>
+                <van-icon name="weapp-nav" color="#ffffff" slot="right"/>
                 <!--相恋天数板块-->
                 <div class="lvoe_date_div">
                     <span>相恋{{lvoe_date}}天</span>
@@ -43,19 +42,20 @@
             <div>
                 <van-panel title="选择更改背景图" desc="" status="">
                     <div>
-                        <croppa
-                                v-model="croppa"
-                                :width="378"
-                                :height="250"
-                                :placeholder="'选择图片'"
-                                :placeholder-font-size="16"
-                                :accept="'image/*'"
-                                prevent-white-space
-                                crossOrigin="anonymous"
-                                :initial-image=dataUrl
-                                @init=""
-                        ></croppa>
-
+                        <van-row type="flex" justify="center">
+                            <croppa
+                                    v-model="croppa"
+                                    :width="350"
+                                    :height="230"
+                                    :placeholder="'选择图片'"
+                                    :placeholder-font-size="16"
+                                    :accept="'image/*'"
+                                    prevent-white-space
+                                    crossOrigin="anonymous"
+                                    :initial-image=dataUrl
+                                    @init=""
+                            ></croppa>
+                        </van-row>
 
                     </div>
                     <div slot="footer">
@@ -130,7 +130,16 @@
         name: "Home",
         data() {
             return {
+                title:'纪念日',
                 records: [{'id': 1, 'title': '相恋日', 'datetime': '2019-03-03'},
+                    {'id': 2, 'title': '相识日', 'datetime': '2009-09-01'},
+                    {'id': 3, 'title': '第一次约会', 'datetime': '2019-02-13'},
+                    {'id': 2, 'title': '相识日', 'datetime': '2009-09-01'},
+                    {'id': 3, 'title': '第一次约会', 'datetime': '2019-02-13'},
+                    {'id': 2, 'title': '相识日', 'datetime': '2009-09-01'},
+                    {'id': 3, 'title': '第一次约会', 'datetime': '2019-02-13'},
+                    {'id': 2, 'title': '相识日', 'datetime': '2009-09-01'},
+                    {'id': 3, 'title': '第一次约会', 'datetime': '2019-02-13'},
                     {'id': 2, 'title': '相识日', 'datetime': '2009-09-01'},
                     {'id': 3, 'title': '第一次约会', 'datetime': '2019-02-13'},
                     {'id': 4, 'title': '第一次旅游', 'datetime': '2019-04-03'}],
@@ -163,7 +172,7 @@
                 this.show = false;
             },
             selectDate() {
-                 return this.date = this.$moment().format('YYYY-MM-DD');
+                return this.date = this.$moment().format('YYYY-MM-DD');
             },
             // 日期选择确认按钮，关闭当前模态框
             confirm() {
@@ -222,14 +231,6 @@
         margin-left: auto
     }
 
-    .van-nav-bar {
-        background-color: #FFC0CB;
-    }
-
-    .van-nav-bar__title {
-        color: #fffbff;
-    }
-
     .love_data_color {
         color: #72d3e6;
 
@@ -237,11 +238,11 @@
 
     .lvoe_date_div {
         font-size: 1.5em;
-        top: 200px;
+        top: 240px;
         left: 210px;
         color: #fffbff;
         position: absolute;
-        z-index: 10;
+        z-index: 0;
     }
 
     .cool {
