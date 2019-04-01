@@ -1,18 +1,20 @@
 <template>
     <van-nav-bar
-            title=""
             fixed
     >
         <div slot="title">
             <slot name="title"></slot>
         </div>
-        <slot name="edit"></slot>
+        <div slot="right">
+            <slot name="right"></slot>
+        </div>
+
     </van-nav-bar>
 </template>
 
 <script>
     export default {
-        name: "header"
+        name: "Header"
     }
 </script>
 

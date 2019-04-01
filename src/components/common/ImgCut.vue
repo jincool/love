@@ -1,28 +1,37 @@
 <template>
-    <croppa
-            v-model="croppa"
-            :width="350"
-            :height="250"
-            :placeholder="'选择图片'"
-            :placeholder-font-size="16"
-            :accept="'image/*'"
-            prevent-white-space
-            :initial-image=dataUrl
-            @init=""
-    ></croppa>
+    <div id="croppa">
+        <van-row type="flex" justify="center">
+            <!--<van-col span="20">-->
+                <croppa
+                        v-model="croppa"
+                        :width="310"
+                        :height="200"
+                        :placeholder="'选择图片'"
+                        :placeholder-font-size="16"
+                        :accept="'image/*'"
+                        prevent-white-space
+                        :initial-image=dataUrl
+                        @init=""
+                        class="croppa"
+                ></croppa>
+            <!--</van-col>-->
+
+        </van-row>
+
+    </div>
 </template>
 
 <script>
     export default {
         name: "ImgCut",
-        data(){
+        data() {
             return {
-                croppa:{},
-                dataUrl:''
+                croppa: {},
+                dataUrl: ''
             }
         },
-        methods:{
-            upLoad () {
+        methods: {
+            upLoad() {
                 this.croppa.generateBlob(blob => {
                     // var formData = new FormData()
                     // var self = this
@@ -40,7 +49,7 @@
                 }, 'image/png', 0.1)
             },
             //头像选取
-            onInit () {
+            onInit() {
                 this.croppa.addClipPlugin(function (ctx, x, y, w, h) {
                     ctx.beginPath()
                     ctx.arc(x + w / 2, y + h / 2, w / 2, 0, 2 * Math.PI, true)
@@ -52,5 +61,8 @@
 </script>
 
 <style scoped>
-
+#croppa{
+    margin: 0 auto;
+    background-color: #fa4e43;
+}
 </style>

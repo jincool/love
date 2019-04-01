@@ -9,6 +9,8 @@ import Axios from 'axios'
 import Vant from 'vant'
 //配置Vant的CSS
 import 'vant/lib/index.css';
+//配置Header标题栏
+import Header from '@/components/common/Header'
 //配置图片裁剪
 import Croppa from 'vue-croppa'
 //配置日期格式JS
@@ -20,12 +22,16 @@ import 'vue-croppa/dist/vue-croppa.css'
 
 //配置公共请求地址
 Axios.defaults.baseURL='http://127.0.0.1/volservice/?a=getApi';
+// Axios添加vue实例属性
 Vue.prototype.$axios=Axios ;
+// 日期格式化添加vue实例属性
 Vue.prototype.$moment=moment ;
 
 //注册Vant全局组建及挂在
 Vue.use(Vant);
-//注册Croppa全局组建及挂在
+//注册Header 标题栏全局组件
+Vue.component('my-header',Header);
+//注册Croppa图片剪辑全局组建及挂在
 Vue.use(Croppa);
 Vue.filter('agoDate',function (datetime) {
     moment.locale('zh-cn');
