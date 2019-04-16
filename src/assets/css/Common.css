@@ -1,0 +1,9 @@
+/*header 表头背景*/
+.van-nav-bar {
+    background-color: #FFC0CB;
+
+}
+/*header 标头字体颜色*/
+.van-nav-bar__title {
+    color: #fffbff;
+}
