@@ -6,6 +6,7 @@ import Plan from '@/components/Plan/Plan'
 import Dynamic from '@/components/Dynamic/Dynamic'
 import Setting from '@/components/Setting/Setting'
 import ImgCut from '@/components/common/ImgCut'
+import Login from '@/components/common/Login'
 
 Vue.use(Router)
 const router=new Router({
@@ -13,13 +14,15 @@ const router=new Router({
         {
             path: '/',
             redirect: 'Home',
+            meta: { requiresAuth: true }
 
         },
         {
             path: '/Home',
             name: 'Home',
             // redirect:'/Home',
-            component: Home
+            component: Home,
+            meta: { requiresAuth: true }
         },
         {
             path: '/Plan',
@@ -37,9 +40,9 @@ const router=new Router({
             component: Setting
         },
         {
-            path: '/ImgCut',
-            name: 'ImgCut',
-            component: ImgCut
+            path: '/Login',
+            name: 'Login',
+            component: Login
         }
     ],
 
