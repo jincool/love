@@ -18,6 +18,8 @@ import moment from 'moment'
 import 'moment/locale/zh-cn'
 //配置图裁剪CSS
 import 'vue-croppa/dist/vue-croppa.css'
+//配置全局css
+import '@/assets/css/Common.css'
 
 
 //配置公共请求地址
