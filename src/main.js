@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 //配置axios
 import Axios from 'axios'
+//配置vuex
+import Vuex from 'vuex'
+
 //配置Vant的JS
 import Vant from 'vant'
 //配置Vant的CSS
@@ -19,30 +22,59 @@ import 'moment/locale/zh-cn'
 //配置图裁剪CSS
 import 'vue-croppa/dist/vue-croppa.css'
 
-
-//配置公共请求地址
-Axios.defaults.baseURL='http://127.0.0.1/volservice/?a=getApi';
 // Axios添加vue实例属性
-Vue.prototype.$axios=Axios ;
+Vue.prototype.$axios = Axios;
+//配置Axios默认请求地址
+Axios.defaults.baseURL = '/api'
+Axios.defaults.headers.post['Content-Type'] = 'application/json';
 // 日期格式化添加vue实例属性
-Vue.prototype.$moment=moment ;
-
+Vue.prototype.$moment = moment;
+//注册Vuex全局
+Vue.use(Vuex)
 //注册Vant全局组建及挂在
 Vue.use(Vant);
+//注册Vuex全局
+
 //注册Header 标题栏全局组件
-Vue.component('my-header',Header);
+Vue.component('my-header', Header);
 //注册Croppa图片剪辑全局组建及挂在
 Vue.use(Croppa);
-Vue.filter('agoDate',function (datetime) {
+Vue.filter('agoDate', function (datetime) {
     moment.locale('zh-cn');
-    return moment().diff(moment(datetime),'day')+'天';
+    return moment().diff(moment(datetime), 'day') + '天';
 })
 Vue.config.productionTip = false
 
+
+//配置 login 状态管理
+import loginStore from '@/store/loginStore'
+
+let store = new Vuex.Store({
+        modules: {
+            login: loginStore
+        }
+    }
+);
+//
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // 判断是否已登录
+        if (store.getters.isLoggedIn) {
+            next();
+            return;
+        }
+        // 未登录则跳转到登录界面
+        next('/login');
+    } else {
+        next() // 确保一定要调用 next()
+    }
+})
+
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
+    el: '#app',
+    router,
+    store,
+    components: {App},
+    template: '<App/>'
 })
