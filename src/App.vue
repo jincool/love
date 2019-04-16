@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view class="my-content"/>
-    <van-tabbar v-model="active" active-color="#FFC0CB">
+    <van-tabbar v-model="active" active-color="#FFC0CB"  v-show="this.$store.getters.isLoggedIn" >
       <van-tabbar-item @click="changeHash" icon="home-o" >纪念日</van-tabbar-item>
       <van-tabbar-item @click="changeHash" icon="notes-o" dot>计划</van-tabbar-item>
       <van-tabbar-item @click="changeHash" icon="friends-o" info="2">动态</van-tabbar-item>
