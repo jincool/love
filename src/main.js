@@ -46,7 +46,7 @@ Vue.filter('agoDate', function (datetime) {
     return moment().diff(moment(datetime), 'day') + '天';
 })
 Vue.config.productionTip = false
-
+Vue.config.devtools =true
 
 //配置 login 状态管理
 import loginStore from '@/store/loginStore'
