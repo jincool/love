@@ -27,7 +27,8 @@ import '@/assets/css/Common.css'
 // Axios添加vue实例属性
 Vue.prototype.$axios = Axios;
 //配置Axios默认请求地址
-Axios.defaults.baseURL = '/api'
+// Axios.defaults.baseURL = '/api';
+ Axios.defaults.baseURL = 'http://jincool.com';
 Axios.defaults.headers.post['Content-Type'] = 'application/json';
 // 日期格式化添加vue实例属性
 Vue.prototype.$moment = moment;
