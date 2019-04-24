@@ -22,22 +22,25 @@ const router=new Router({
             name: 'Home',
             // redirect:'/Home',
             component: Home,
-            meta: { requiresAuth: true }
+            meta: { requiresAuth: true ,keepAlive: false}
         },
         {
             path: '/Plan',
             name: 'Plan',
-            component: Plan
+            component: Plan,
+            meta: { requiresAuth: true ,keepAlive: true}
         },
         {
             path: '/Dynamic',
             name: 'Dynamic',
-            component: Dynamic
+            component: Dynamic,
+            meta: { requiresAuth: true ,keepAlive: false}
         },
         {
             path: '/Setting',
             name: 'Setting',
-            component: Setting
+            component: Setting,
+            meta: { requiresAuth: true ,keepAlive: false}
         },
         {
             path: '/Login',
