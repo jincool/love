@@ -52,7 +52,7 @@
                 }else {
                     this.timer=setInterval(()=>{
                         this.planStatus();
-                    },60000)
+                    },6000000)
                 }
             }
 
