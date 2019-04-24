@@ -57,7 +57,7 @@
                 };
                 this.$store.dispatch('Login', params)
                     .then(() => {
-                        this.$toast(this.$store.state.login.message)
+                        this.$toast(this.$store.state.login.message);
                         this.$router.push({path: '/'});
                     })
                     .catch((error) => {
