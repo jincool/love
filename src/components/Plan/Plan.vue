@@ -12,12 +12,13 @@
       </van-row>
       <br>
       <!--下啦刷新-->
-      <van-pull-refresh  v-model="isLoading" @refresh="onRefresh" >
+      <van-pull-refresh class="" v-model="isLoading" @refresh="onRefresh" >
          <van-list
                  v-model="loading"
                  :finished="finished"
-                 finished-text="没有更多了"
+                 finished-text=""
                  :offset="30"
+                 :immediate-check=true
                  @load="onLoad"
                  ref="check"
          >
@@ -50,7 +51,7 @@
                            {{info.address}}
                         </div>
                         <van-row type="flex" justify="center">
-                           <van-button round plain hairline size="mini" type="danger">取消</van-button>
+                           <van-button @click="cancel(info.id)" round plain hairline size="mini" type="danger">取消</van-button>
                         </van-row>
 
                      </van-cell>
@@ -80,7 +81,6 @@
             return{
                 title:'计划',
                 mainInfo:[],
-                count: 0,
                 isLoading: false,
                 imageURL:require('@/assets/img/logo.png'),
                 page:1,
@@ -90,11 +90,15 @@
         },
 
         methods: {
+            //下拉刷新
             onRefresh() {
                 setTimeout(() => {
+                    this.mainInfo=[];
+                    this.page=1;
+                    this.finished = false
+                    this.onLoad();
                     this.$toast('刷新成功');
                     this.isLoading = false;
-                    this.count++;
                 }, 500);
             },
             contentClass(sex){
@@ -127,7 +131,7 @@
                         // this.mainInfo=res.data;
                         if (res.data.length === 0) {
                             this.finished = true;
-                            this.$toast('有底线啦');
+                            //this.$toast('有底线啦');
                             this.loading = false;
                             return false
                         }
@@ -135,16 +139,31 @@
                         this.mainInfo=this.mainInfo.concat(res.data)
                         this.loading = false;
                         this.page ++;
-                         // console.log(this.mainInfo);
+                          console.log(this.mainInfo);
                     })
 
                 // }, 500);
+            },
+            //取消计划
+            cancel(id){
+                this.$toast(id);
+                this.onRefresh()
+            },
+            //判断是否有更新状态
+            hasUpdate(){
+               if (this.$store.getters.planDot) {
+                   // 存在更新，页面刷新
+                   this. onRefresh();
+                   this.$store.commit('watchPlan');
+               }
             }
 
         },
         created(){
-            // this.planInfo(this.page);
-        }
+        },
+        activated: function () {
+            this.hasUpdate(); //判断是否有更新状态
+        },
 
 
     }
@@ -189,4 +208,5 @@
       border-radius: 10px;
       font-size: small;
    }
+
 </style>
