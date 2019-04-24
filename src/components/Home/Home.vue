@@ -145,7 +145,7 @@
                     {'id': 4, 'title': '第一次旅游', 'datetime': '2019-04-03'}],
                 bgShow: false, //背景模态框
                 show: false, //纪念日模态框
-                dateShow: false, //纪念日模态框
+                dateShow: false, //日期选择框
                 croppa: {},  //裁剪的数据
                 dataUrl: '',
                 lvoe_date: '345', //恋爱天数
