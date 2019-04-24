@@ -28,7 +28,7 @@ import '@/assets/css/Common.css'
 Vue.prototype.$axios = Axios;
 //配置Axios默认请求地址
 // Axios.defaults.baseURL = '/api';
- Axios.defaults.baseURL = 'http://jincool.com';
+Axios.defaults.baseURL = 'http://jincool.com';
 Axios.defaults.headers.post['Content-Type'] = 'application/json';
 // 日期格式化添加vue实例属性
 Vue.prototype.$moment = moment;
@@ -47,14 +47,16 @@ Vue.filter('agoDate', function (datetime) {
     return moment().diff(moment(datetime), 'day') + '天';
 })
 Vue.config.productionTip = false;
-Vue.config.devtools =true;
+Vue.config.devtools = true;
 
 //配置 login 状态管理
 import loginStore from '@/store/loginStore'
+import statusStore from '@/store/statusStore'
 
 let store = new Vuex.Store({
         modules: {
-            login: loginStore
+            login: loginStore,
+            status: statusStore
         }
     }
 );
