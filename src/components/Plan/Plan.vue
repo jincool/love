@@ -68,6 +68,60 @@
       </van-pull-refresh>
 
 
+
+      <!--添加计划模态框板块-->
+      <van-popup v-model="show" overlay-class="cool" position="right" :overlay="true">
+         <van-nav-bar
+                 title="发起计划"
+                 left-text="返回"
+                 right-text="保存"
+                 left-arrow
+                 @click-left="addInfo"
+                 @click-right="save"
+         />
+         <!--发起计划内容板块-->
+         <van-cell-group>
+            <van-field
+                    v-model="message"
+                    type="textarea"
+                    placeholder="我想和你有一次更加亲密的约会计划"
+                    rows="5"
+                    autosize
+                    clearable
+            />
+         </van-cell-group>
+         <!--选择出行日期  -->
+         <van-cell-group>
+            <van-cell @click.native="selectDateShow" icon="underway-o" title="日期" value-class="love_data_color"
+                      is-link value="">
+               <template slot="">
+                  {{date}}
+               </template>
+            </van-cell>
+            <van-field
+                    v-model="address"
+                    clearable
+                    label="地点"
+                    left-icon="location-o"
+                    placeholder=""
+            />
+         </van-cell-group>
+
+         <!--添加纪念日模态框板块end-->
+      </van-popup>
+
+      <!--日期选择模态框-->
+      <van-popup v-model="dateShow" position="bottom" :overlay="false">
+         <van-datetime-picker
+                 v-model="currentDate"
+                 type="date"
+                 @confirm="confirm"
+                 @change="change"
+                 @cancel="dateCancel"
+         />
+      </van-popup>
+
+
    </div>
 
 
@@ -80,20 +134,53 @@
         data(){
             return{
                 title:'计划',
-                mainInfo:[],
+                show:false,//默认关闭发起计划模态框
+                mainInfo:[],//计划主要信息列表
                 isLoading: false,
-                imageURL:require('@/assets/img/logo.png'),
-                page:1,
+                imageURL:require('@/assets/img/logo.png'),//头像
+                page:1,//默认起始页
                 loading: false,//启停加载
                 finished: false,//启停结束加载
+                message: '',//发起计划内容
+                currentDate: new Date(),//日期选择,
+                address:'',
+                dateShow: false, //纪念日模态框
+                date:''
             }
         },
 
         methods: {
+            // 发起模态框开启/关闭
+            addInfo() {
+                this.show = !this.show;
+            },
+            //日期选择模态框开启
+            selectDateShow() {
+                this.dateShow = !this.dateShow
+            },
+            // 保存发起计划数据
+            save(){},
+            // 日期选择确认按钮，关闭当前模态框
+            confirm() {
+                this.selectDateShow()
+            },
+            // 日期选择更改
+            change(e) {
+                let dateArr = e.getValues()
+                this.date = dateArr[0] + '-' + dateArr[1] + '-' + dateArr[2]
+            },
+            // 日期选择取消按钮，关闭当前模态框
+            dateCancel() {
+                this.selectDateShow()
+            },
+            selectDate() {
+                return this.date = this.$moment().format('YYYY-MM-DD');
+            },
             //下拉刷新
             onRefresh() {
                 setTimeout(() => {
                     this.mainInfo=[];
+                    console.log(this.mainInfo)
                     this.page=1;
                     this.finished = false
                     this.onLoad();
@@ -108,9 +195,6 @@
             detailClass(sex){
                 let detailClass = {'1':'plan_detail','0':'plan_detail_women'}[sex]
                 return detailClass;
-
-            },
-            addInfo(){
 
             },
             planInfo(page){
@@ -139,7 +223,7 @@
                         this.mainInfo=this.mainInfo.concat(res.data)
                         this.loading = false;
                         this.page ++;
-                          console.log(this.mainInfo);
+                         // console.log(this.mainInfo);
                     })
 
                 // }, 500);
@@ -160,6 +244,7 @@
 
         },
         created(){
+            this.selectDate()// 加载当前日期
         },
         activated: function () {
             this.hasUpdate(); //判断是否有更新状态
@@ -207,6 +292,11 @@
       background-color: #ffbac8;
       border-radius: 10px;
       font-size: small;
+   }
+   /*模态框*/
+   .van-popup--right {
+      height: 100%;
+      width: 100%;
    }
 
 </style>
