@@ -25,11 +25,13 @@ import 'vue-croppa/dist/vue-croppa.css'
 import '@/assets/css/Common.css'
 
 // Axios添加vue实例属性
+//Axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';  //此处是增加的代码，设置请求头的类型
 Vue.prototype.$axios = Axios;
+
 //配置Axios默认请求地址
 // Axios.defaults.baseURL = '/api';
 Axios.defaults.baseURL = 'http://jincool.com';
-Axios.defaults.headers.post['Content-Type'] = 'application/json';
+Axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 // 日期格式化添加vue实例属性
 Vue.prototype.$moment = moment;
 //注册Vuex全局
