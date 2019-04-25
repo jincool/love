@@ -5,7 +5,7 @@
                 <my-header>
                     <div slot="title">{{title}}</div>
                     <div slot="right">
-                        <van-icon name="weapp-nav" color="#ffffff" @click="addInfo" />
+                        <van-icon name="weapp-nav" color="#ffffff" @click="addInfo"/>
                     </div>
                 </my-header>
                 <van-icon name="weapp-nav" color="#ffffff" slot="right"/>
@@ -51,9 +51,7 @@
                                     :placeholder-font-size="16"
                                     :accept="'image/*'"
                                     prevent-white-space
-                                    crossOrigin="anonymous"
-                                    :initial-image=dataUrl
-                                    @init=""
+
                             ></croppa>
                         </van-row>
 
@@ -64,7 +62,7 @@
                                 <van-button @click="updateImg" size="small" type="danger">取消</van-button>
                             </van-col>
                             <van-col span="4" offset="16">
-                                <van-button size="small">确定</van-button>
+                                <van-button @click="uploadCroppedImage" size="small">确定</van-button>
                             </van-col>
                         </van-row>
 
@@ -130,7 +128,7 @@
         name: "Home",
         data() {
             return {
-                title:'纪念日',
+                title: '纪念日',
                 records: [{'id': 1, 'title': '相恋日', 'datetime': '2019-03-03'},
                     {'id': 2, 'title': '相识日', 'datetime': '2009-09-01'},
                     {'id': 3, 'title': '第一次约会', 'datetime': '2019-02-13'},
@@ -186,6 +184,33 @@
             // 日期选择取消按钮，关闭当前模态框
             cancel() {
                 this.selectDateShow()
+            },
+            //裁剪图片上传至服务器
+            uploadCroppedImage() {
+                let that = this;
+                this.croppa.generateBlob(
+                    (blob) => {
+                        // 编写代码上传裁剪的图像文件
+                        // this.croppa.generateDataUrl() base64
+                        console.log(blob);
+                        var formdata = new FormData();
+                        let config = {
+                            formpost: "formpost",
+                            headers: {
+                                'Content-Type': 'multipart/form-data'  //以表单传数据的格式来传递fromdata
+                            }
+                        };
+                        formdata.append("myfile", blob,'png'); //封装到formdata中
+                        that.$axios.post('index/Home/upLoadImg', formdata,config).then(res => {
+                            console.log(res);
+                            let data = res.data;
+                            console.log(data);
+
+                        });
+                    },
+                    "image/jpeg",
+                    0.8
+                ); // 80%压缩文件
             }
 
 
