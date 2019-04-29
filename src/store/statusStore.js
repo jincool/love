@@ -7,12 +7,6 @@ const status = {
         planDot: false,//计划状态
     },
     mutations: {
-
-        auth_success(state, token, user) {
-            // state.status = 'success';
-            // state.token = token;
-            // state.user = user;
-        },
         watchPlan(state){
             state.planDot=false;
         },
