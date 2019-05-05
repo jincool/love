@@ -200,11 +200,7 @@
                                 'Content-Type': 'multipart/form-data'  //以表单传数据的格式来传递fromdata
                             }
                         };
-<<<<<<< HEAD
-                        formdata.append("file", blob,'bgImg'); //封装到formdata中
-=======
                         formdata.append("file", blob,'image.jpeg'); //封装到formdata中
->>>>>>> 37fc8e72d7e575fc3850fe7d5ca3e3045f411b1c
                         that.$axios.post('index/Home/upLoadImg', formdata,config).then(res => {
                             let data = res.data;
                             console.log(res);
