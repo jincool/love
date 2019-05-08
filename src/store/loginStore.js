@@ -4,6 +4,7 @@ const login = {
     state: {
         status: '',
         token: localStorage.getItem('token') || '',
+        wid: localStorage.getItem('wid') || '',
         message: '',
         user: {},
     },
@@ -11,9 +12,10 @@ const login = {
         auth_request(state) {
             state.status = 'loading';
         },
-        auth_success(state, token, user) {
+        auth_success(state, token,wid, user) {
             state.status = 'success';
             state.token = token;
+            state.wid = wid;
             state.user = user;
         },
         auth_message(state, message) {
@@ -25,6 +27,7 @@ const login = {
         logout(state) {
             state.status = '';
             state.token = '';
+            state.wid = '';
             state.message = '';
         },
     },
@@ -37,14 +40,16 @@ const login = {
                     .then(resp => {
                         switch (resp.data.status) {
                             case 1:
-                                const token = resp.data.user.uid
-                                const user = resp.data.user
-                                localStorage.setItem('token', token)
+                                const token = resp.data.user.uid;
+                                const wid = resp.data.user.wid;
+                                const user = resp.data.user;
+                                localStorage.setItem('token', token);
+                                localStorage.setItem('wid', wid);
                                 // 每次请求接口时，需要在headers添加对应的Token验证
                                 axios.defaults.headers.common['Authorization'] = token
                                 // 更新token
-                                commit('auth_success', token, user)
-                                commit('auth_message', resp.data.message)
+                                commit('auth_success', token,wid, user);
+                                commit('auth_message', resp.data.message);
                                 resolve(resp)
                                 break;
                             default:
@@ -57,8 +62,9 @@ const login = {
 
                     })
                     .catch(err => {
-                        commit('auth_error')
-                        localStorage.removeItem('token')
+                        commit('auth_error');
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('wid');
                         reject(err)
                     })
             })
