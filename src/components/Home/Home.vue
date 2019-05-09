@@ -14,7 +14,7 @@
                     <span>相恋{{lvoe_date}}天</span>
                 </div>
                 <a href="#" class="thumbnail">
-                    <img @click="updateImg" class="" src="../../assets/img/bg_home1.jpeg"
+                    <img @click="updateImg" class="" :src="dataUrl"
                          alt="图" style="height:250px">
                 </a>
 
@@ -185,6 +185,18 @@
             cancel() {
                 this.selectDateShow()
             },
+            getBgImg(){
+                let wid= this.$store.getters.getWid;
+                let param={'wid':wid};
+                this.$axios.post('index/home/bgImg',param)
+                    .then(res=>{
+                      // this.$toast(res.data);
+                       this.dataUrl='http://jincool.com/uploads/'+res.data;
+                    })
+                    .catch(err=>{
+
+                    })
+            },
             //裁剪图片上传至服务器
             uploadCroppedImage() {
                 let that = this;
@@ -193,18 +205,19 @@
                         // 编写代码上传裁剪的图像文件
                         // this.croppa.generateDataUrl() base64
                         console.log(blob);
-                        var formdata = new FormData();
+                        let formdata = new FormData();
                         let config = {
                             formpost: "formpost",
                             headers: {
                                 'Content-Type': 'multipart/form-data'  //以表单传数据的格式来传递fromdata
                             }
                         };
+                        let wid=this.$store.getters.getWid;//获取用户信息
                         formdata.append("file", blob,'image.jpeg'); //封装到formdata中
+                        formdata.append("wid", wid); //用户信息封装到formdata中
                         that.$axios.post('index/Home/upLoadImg', formdata,config).then(res => {
-                            let data = res.data;
-                            console.log(res);
-
+                            this.getBgImg();//刷新纪念日背景
+                            this.updateImg();//关闭照片上传模态框
                         });
                     },
                     "image/jpeg",
@@ -216,6 +229,7 @@
         },
         created() {
             this.selectDate()//加载当前日期
+            this.getBgImg();
             // this.$axios.post('')
             //     .then(res=>{
             //
